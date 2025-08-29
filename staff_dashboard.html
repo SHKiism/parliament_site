@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>داشبورد کارمند</title>
+  <link rel="stylesheet" href="staff_dashboard.css">
+  <style>
+    @import url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css');
+
+    body {
+      font-family: 'Vazir', sans-serif;
+      background: #f4f4fc;
+      direction: rtl;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      flex: 1;
+      min-width: 150px;
+      background: #4f46e5;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 10px;
+      font-size: 1.1rem;
+    }
+
+    .stat-card span {
+      display: block;
+      font-size: 1.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .filter-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      align-items: center;
+    }
+
+    .filter-section input,
+    .filter-section select {
+      padding: 0.6rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .filter-section button {
+      background: #4f46e5;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .requests-table table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    table th, table td {
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    .new { color: #ff9800; font-weight: bold; }
+    .in-progress { color: #3f51b5; font-weight: bold; }
+    .answered { color: #4caf50; font-weight: bold; }
+
+    a {
+      color: #4f46e5;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>داشبورد کارمند</h1>
+
+    <div class="stats">
+      <div class="stat-card">کل درخواست‌ها <span>۱۸</span></div>
+      <div class="stat-card">جدید <span>۶</span></div>
+      <div class="stat-card">در حال بررسی <span>۴</span></div>
+      <div class="stat-card">پاسخ داده‌شده <span>۷</span></div>
+      <div class="stat-card">رد شده <span>۱</span></div>
+    </div>
+
+    <div class="filter-section">
+      <input type="text" placeholder="جستجو بر اساس عنوان یا کاربر...">
+      <select>
+        <option>همه وضعیت‌ها</option>
+        <option>جدید</option>
+        <option>در حال بررسی</option>
+        <option>پاسخ داده‌شده</option>
+        <option>رد شده</option>
+      </select>
+      <button>اعمال فیلتر</button>
+    </div>
+
+    <div class="requests-table">
+      <table>
+        <thead>
+          <tr>
+            <th>شماره</th>
+            <th>کاربر</th>
+            <th>عنوان</th>
+            <th>نوع</th>
+            <th>تاریخ</th>
+            <th>وضعیت</th>
+            <th>عملیات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>۱۰۱۲</td>
+            <td>علی رضایی</td>
+            <td>درخواست ملاقات</td>
+            <td>ملاقات</td>
+            <td>۱۴۰۳/۰۲/۲۰</td>
+            <td class="new">جدید</td>
+            <td><a href="review_request_staff.html">بررسی</a></td>
+          </tr>
+          <tr>
+            <td>۱۰۱۱</td>
+            <td>زهرا ملکی</td>
+            <td>شکایت از خدمات شهری</td>
+            <td>شکایت</td>
+            <td>۱۴۰۳/۰۲/۱۸</td>
+            <td class="in-progress">در حال بررسی</td>
+            <td><a href="review_request_staff.html">بررسی</a></td>
+          </tr>
+          <tr>
+            <td>۱۰۱۰</td>
+            <td>مهدی زمانی</td>
+            <td>پیشنهاد بودجه</td>
+            <td>پیشنهاد</td>
+            <td>۱۴۰۳/۰۲/۱۵</td>
+            <td class="answered">پاسخ داده‌شده</td>
+            <td><a href="review_request_staff.html">نمایش</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

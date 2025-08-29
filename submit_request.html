@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>ثبت درخواست جدید</title>
+  <style>
+    @import url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css');
+
+    body {
+      font-family: 'Vazir', sans-serif;
+      background: #f4f4fc;
+      margin: 0;
+      padding: 2rem;
+      direction: rtl;
+    }
+
+    .form-container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+
+    form label {
+      display: block;
+      margin: 0.5rem 0 0.25rem;
+      font-weight: 500;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+    }
+
+    button {
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      display: block;
+      margin: auto;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #3b39c9;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>ثبت درخواست جدید</h1>
+    <form>
+      <label for="title">عنوان درخواست</label>
+      <input type="text" id="title" placeholder="مثلاً ملاقات با نماینده" required>
+
+      <label for="type">نوع درخواست</label>
+      <select id="type" required>
+        <option value="">انتخاب کنید</option>
+        <option value="پیشنهاد">پیشنهاد</option>
+        <option value="انتقاد">انتقاد</option>
+        <option value="ملاقات">ملاقات</option>
+        <option value="شکایت">شکایت</option>
+      </select>
+
+      <label for="description">شرح درخواست</label>
+      <textarea id="description" rows="5" placeholder="توضیحات کامل در مورد درخواست خود را بنویسید..." required></textarea>
+
+      <label for="attachment">فایل پیوست</label>
+      <input type="file" id="attachment">
+
+      <button type="submit">ارسال درخواست</button>
+    </form>
+  </div>
+</body>
+</html>
