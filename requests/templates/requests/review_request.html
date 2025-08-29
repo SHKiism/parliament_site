@@ -51,28 +51,36 @@
       display: inline-block;
     }
 
-    .new { background: #fff3cd; color: #856404; }
-    .in-progress { background: #e3f2fd; color: #0d47a1; }
-    .answered { background: #e8f5e9; color: #2e7d32; }
+    .pending { background: #fff3cd; color: #856404; }
+    .in_progress { background: #e3f2fd; color: #0d47a1; }
+    .done { background: #e8f5e9; color: #2e7d32; }
+    .rejected { background: #ffebee; color: #b71c1c; }
   </style>
 </head>
 <body>
   <div class="details-container">
-    <h1>جزئیات درخواست شماره ۱۰۱۲</h1>
+    <h1>جزئیات درخواست شماره {{ request_obj.id }}</h1>
 
     <section class="section">
       <h2>مشخصات درخواست</h2>
-      <p><strong>عنوان:</strong> درخواست ملاقات با نماینده</p>
-      <p><strong>نوع:</strong> ملاقات</p>
-      <p><strong>تاریخ ثبت:</strong> ۱۴۰۳/۰۲/۲۰</p>
-      <p><strong>وضعیت:</strong> <span class="status in-progress">در حال بررسی</span></p>
-      <p><strong>شرح:</strong> لطفاً زمان ملاقات حضوری برای ارائه پیشنهادات در مورد منطقه اعلام شود.</p>
-      <p><strong>فایل پیوست:</strong> <a href="#">دانلود فایل</a></p>
+      <p><strong>عنوان:</strong> {{ request_obj.title }}</p>
+      <p><strong>نوع:</strong> {{ request_obj.type }}</p>
+      <p><strong>تاریخ ثبت:</strong> {{ request_obj.created_at|date:"Y/m/d" }}</p>
+      <p>
+        <strong>وضعیت:</strong>
+        <span class="status {{ request_obj.status }}">
+          {{ request_obj.get_status_display }}
+        </span>
+      </p>
+      <p><strong>شرح:</strong> {{ request_obj.description|default:"-" }}</p>
+      {% if request_obj.attachment %}
+        <p><strong>فایل پیوست:</strong> <a href="{{ request_obj.attachment.url }}">دانلود فایل</a></p>
+      {% endif %}
     </section>
 
     <section class="section">
       <h2>پاسخ مسئول</h2>
-      <p>کاربر گرامی، درخواست شما در حال بررسی است. در اسرع وقت با شما تماس گرفته خواهد شد.</p>
+      <p>{{ request_obj.response|default:"هنوز پاسخی ثبت نشده است." }}</p>
     </section>
   </div>
 </body>

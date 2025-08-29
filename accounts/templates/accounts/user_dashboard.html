@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>داشبورد کاربر</title>
+  <style>
+    @import url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css');
+    body { font-family: 'Vazir', sans-serif; background: #f4f4fc; margin: 0; padding: 2rem; direction: rtl; }
+    .dashboard { max-width: 1000px; margin: auto; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); }
+    h1 { text-align: center; color: #333; margin-bottom: 2rem; }
+    .actions { display: flex; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+    .actions a { background: #4f46e5; color: white; text-decoration: none; padding: 0.8rem 1.2rem; border-radius: 8px; font-size: 1rem; transition: background 0.3s; }
+    .actions a:hover { background: #3b39c9; }
+    table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; background: white; }
+    th, td { padding: 0.8rem; text-align: center; border: 1px solid #ddd; }
+    th { background: #f0f0ff; color: #333; }
+    .pending { color: #ff9800; font-weight: bold; }
+    .in_progress { color: #3f51b5; font-weight: bold; }
+    .done { color: #4caf50; font-weight: bold; }
+    .rejected { color: #f44336; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <h1>داشبورد کاربر</h1>
+
+    <div class="actions">
+      <a href="{% url 'submit_request' %}">+ ثبت درخواست جدید</a>
+      <a href="{% url 'edit_profile' %}">ویرایش اطلاعات کاربری</a>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>شماره</th>
+          <th>عنوان</th>
+          <th>نوع</th>
+          <th>تاریخ</th>
+          <th>وضعیت</th>
+          <th>جزئیات</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for req in requests %}
+        <tr>
+          <td>{{ req.id }}</td>
+          <td>{{ req.title }}</td>
+          <td>{{ req.type }}</td>
+          <td>{{ req.created_at|date:"Y/m/d" }}</td>
+          <td class="{{ req.status }}">{{ req.get_status_display }}</td>
+          <td><a href="{% url 'request_detail' req.id %}">نمایش</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6">هیچ درخواستی ثبت نشده است.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

@@ -3,29 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <title>تأیید کد ورود</title>
-  <link rel="stylesheet" href="verify_code.css" />
   <style>
     @import url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css');
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { font-family: 'Vazir', sans-serif; height: 100%; background: #f4f4fc; }
 
-    body, html {
-      font-family: 'Vazir', sans-serif;
-      height: 100%;
-      background: #f4f4fc;
-    }
-
-    .container {
-      display: flex;
-      height: 100vh;
-      align-items: center;
-      justify-content: center;
-    }
-
+    .container { display: flex; height: 100vh; align-items: center; justify-content: center; }
     .verify-box {
       background: white;
       padding: 2rem;
@@ -34,18 +18,8 @@
       width: 350px;
       text-align: center;
     }
-
-    .verify-box h2 {
-      font-size: 20px;
-      margin-bottom: 1rem;
-    }
-
-    .verify-box p {
-      font-size: 14px;
-      margin-bottom: 1.5rem;
-      color: #555;
-    }
-
+    .verify-box h2 { font-size: 20px; margin-bottom: 1rem; }
+    .verify-box p { font-size: 14px; margin-bottom: 1.5rem; color: #555; }
     input[type="text"] {
       letter-spacing: 1rem;
       font-size: 22px;
@@ -57,7 +31,6 @@
       direction: ltr;
       font-family: 'Vazir', sans-serif;
     }
-
     button {
       margin-top: 1.5rem;
       background-color: #4f46e5;
@@ -70,20 +43,10 @@
       width: 100%;
       font-size: 16px;
     }
-
-    .resend {
-      margin-top: 1rem;
-      font-size: 13px;
-    }
-
-    .resend a {
-      color: #4f46e5;
-      text-decoration: none;
-    }
-
-    .resend a:hover {
-      text-decoration: underline;
-    }
+    .resend { margin-top: 1rem; font-size: 13px; }
+    .resend a { color: #4f46e5; text-decoration: none; }
+    .resend a:hover { text-decoration: underline; }
+    .error { color: red; margin-top: 1rem; font-size: 14px; }
   </style>
 </head>
 <body>
@@ -91,12 +54,18 @@
     <div class="verify-box">
       <h2>تأیید کد ورود</h2>
       <p>کد ۵ رقمی ارسال شده به شماره شما را وارد کنید</p>
-      <form onsubmit="event.preventDefault(); window.location.href='user_dashboard.html';">
-        <input type="text" maxlength="5" pattern="\d{5}" inputmode="numeric" required />
+      <form method="post">
+        {% csrf_token %}
+        <input type="text" name="otp" maxlength="5" pattern="\d{5}" inputmode="numeric" required />
         <button type="submit">تأیید و ورود</button>
+        {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
       </form>
+
       <div class="resend">
-        <span>کد دریافت نکردید؟ </span><a href="#">ارسال مجدد</a>
+        <span>کد دریافت نکردید؟ </span>
+        <a href="{% url 'login' %}">ارسال مجدد</a>
       </div>
     </div>
   </div>
