@@ -97,7 +97,7 @@
 
     <section class="section">
         <h2>ثبت پاسخ</h2>
-        <form>
+        <form method="post" action="{% url 'review_request_staff' req.id %}">
             {% csrf_token %}
             <label for="status">تغییر وضعیت</label>
             <select id="status" name="status">
