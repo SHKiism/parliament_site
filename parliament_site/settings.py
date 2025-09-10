@@ -38,9 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # اپ‌های خودت
     "accounts",
-    "requests",  # اگه قبلاً ساختی
+    "requests",
 ]
 
 MIDDLEWARE = [

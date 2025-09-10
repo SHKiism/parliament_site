@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import User
+from accounts.models import Citizen
 
 class Request(models.Model):
     STATUS_CHOICES = (
@@ -8,9 +8,8 @@ class Request(models.Model):
         ('done', 'انجام شده'),
         ('rejected', 'رد شده'),
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="requests")
+    citizen = models.ForeignKey(Citizen, on_delete=models.CASCADE, related_name="requests")
     title = models.CharField(max_length=200)
-    type = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     description = models.TextField(blank=True, null=True)
@@ -18,4 +17,4 @@ class Request(models.Model):
     response = models.TextField(blank=True, null=True)  # پاسخ کارمند
 
     def __str__(self):
-        return f"{self.title} - {self.user.national_id}"
+        return f"{self.title} - {self.citizen.national_id}"

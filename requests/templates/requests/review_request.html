@@ -1,87 +1,87 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>جزئیات درخواست</title>
-  <style>
-    @import url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css');
+    <meta charset="UTF-8">
+    <title>جزئیات درخواست</title>
+    <style>
+        @import url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css');
 
-    body {
-      font-family: 'Vazir', sans-serif;
-      background: #f4f4fc;
-      margin: 0;
-      padding: 2rem;
-      direction: rtl;
-    }
+        body {
+          font-family: 'Vazir', sans-serif;
+          background: #f4f4fc;
+          margin: 0;
+          padding: 2rem;
+          direction: rtl;
+        }
 
-    .details-container {
-      max-width: 800px;
-      margin: auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
+        .details-container {
+          max-width: 800px;
+          margin: auto;
+          background: white;
+          padding: 2rem;
+          border-radius: 12px;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
 
-    h1 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 2rem;
-    }
+        h1 {
+          text-align: center;
+          color: #333;
+          margin-bottom: 2rem;
+        }
 
-    .section {
-      margin-bottom: 2rem;
-    }
+        .section {
+          margin-bottom: 2rem;
+        }
 
-    .section h2 {
-      border-bottom: 2px solid #4f46e5;
-      padding-bottom: 0.5rem;
-      color: #4f46e5;
-      margin-bottom: 1rem;
-    }
+        .section h2 {
+          border-bottom: 2px solid #4f46e5;
+          padding-bottom: 0.5rem;
+          color: #4f46e5;
+          margin-bottom: 1rem;
+        }
 
-    p {
-      margin: 0.5rem 0;
-    }
+        p {
+          margin: 0.5rem 0;
+        }
 
-    .status {
-      font-weight: bold;
-      padding: 0.3rem 1rem;
-      border-radius: 8px;
-      display: inline-block;
-    }
+        .status {
+          font-weight: bold;
+          padding: 0.3rem 1rem;
+          border-radius: 8px;
+          display: inline-block;
+        }
 
-    .pending { background: #fff3cd; color: #856404; }
-    .in_progress { background: #e3f2fd; color: #0d47a1; }
-    .done { background: #e8f5e9; color: #2e7d32; }
-    .rejected { background: #ffebee; color: #b71c1c; }
-  </style>
+        .pending { background: #fff3cd; color: #856404; }
+        .in_progress { background: #e3f2fd; color: #0d47a1; }
+        .done { background: #e8f5e9; color: #2e7d32; }
+        .rejected { background: #ffebee; color: #b71c1c; }
+    </style>
 </head>
 <body>
-  <div class="details-container">
+<div class="details-container">
     <h1>جزئیات درخواست شماره {{ request_obj.id }}</h1>
 
     <section class="section">
-      <h2>مشخصات درخواست</h2>
-      <p><strong>عنوان:</strong> {{ request_obj.title }}</p>
-      <p><strong>نوع:</strong> {{ request_obj.type }}</p>
-      <p><strong>تاریخ ثبت:</strong> {{ request_obj.created_at|date:"Y/m/d" }}</p>
-      <p>
-        <strong>وضعیت:</strong>
-        <span class="status {{ request_obj.status }}">
+        <h2>مشخصات درخواست</h2>
+        <p><strong>عنوان:</strong> {{ request_obj.title }}</p>
+        <p><strong>نوع:</strong> {{ request_obj.type }}</p>
+        <p><strong>تاریخ ثبت:</strong> {{ request_obj.created_at|date:"Y/m/d" }}</p>
+        <p>
+            <strong>وضعیت:</strong>
+            <span class="status {{ request_obj.status }}">
           {{ request_obj.get_status_display }}
         </span>
-      </p>
-      <p><strong>شرح:</strong> {{ request_obj.description|default:"-" }}</p>
-      {% if request_obj.attachment %}
+        </p>
+        <p><strong>شرح:</strong> {{ request_obj.description|default:"-" }}</p>
+        {% if request_obj.attachment %}
         <p><strong>فایل پیوست:</strong> <a href="{{ request_obj.attachment.url }}">دانلود فایل</a></p>
-      {% endif %}
+        {% endif %}
     </section>
 
     <section class="section">
-      <h2>پاسخ مسئول</h2>
-      <p>{{ request_obj.response|default:"هنوز پاسخی ثبت نشده است." }}</p>
+        <h2>پاسخ مسئول</h2>
+        <p>{{ request_obj.response|default:"هنوز پاسخی ثبت نشده است." }}</p>
     </section>
-  </div>
+</div>
 </body>
 </html>

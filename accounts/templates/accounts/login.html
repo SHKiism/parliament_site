@@ -1,141 +1,160 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ورود به سامانه</title>
-  <style>
-    @import url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css');
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ورود به سامانه</title>
+    <style>
+        @import url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css');
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body, html { font-family: 'Vazir', sans-serif; height: 100%; background: #f4f4fc; }
+        body, html { font-family: 'Vazir', sans-serif; height: 100%; background: #f4f4fc; }
 
-    .container {
-      display: flex;
-      height: 100vh;
-      align-items: center;
-      justify-content: center;
-      background: url('your-background-image.svg') no-repeat center center/cover;
-      position: relative;
-    }
+        .container {
+          display: flex;
+          height: 100vh;
+          align-items: center;
+          justify-content: center;
+          background: url('your-background-image.svg') no-repeat center center/cover;
+          position: relative;
+        }
 
-    .login-box {
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-      width: 350px;
-      z-index: 2;
-    }
+        .login-box {
+          background: white;
+          padding: 2rem;
+          border-radius: 12px;
+          box-shadow: 0 0 20px rgba(0,0,0,0.1);
+          width: 350px;
+          z-index: 2;
+        }
 
-    .login-box h2 { font-size: 20px; margin-bottom: 0.5rem; }
-    .login-box p { margin-bottom: 1.5rem; font-size: 14px; }
-    .login-box a { color: #4f46e5; text-decoration: none; }
-    form { display: flex; flex-direction: column; }
-    label { margin: 0.5rem 0 0.25rem; font-size: 14px; font-weight: 500; }
-    input { padding: 0.5rem; margin-bottom: 1rem; border-radius: 8px; border: 1px solid #ccc; }
-    button { background-color: #4f46e5; color: white; border: none; padding: 0.75rem; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .login-box h2 { font-size: 20px; margin-bottom: 0.5rem; }
+        .login-box p { margin-bottom: 1.5rem; font-size: 14px; }
+        .login-box a { color: #4f46e5; text-decoration: none; }
+        form { display: flex; flex-direction: column; }
+        label { margin: 0.5rem 0 0.25rem; font-size: 14px; font-weight: 500; }
+        input { padding: 0.5rem; margin-bottom: 1rem; border-radius: 8px; border: 1px solid #ccc; }
+        button { background-color: #4f46e5; color: white; border: none; padding: 0.75rem; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
-    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.3); display: none; align-items: center; justify-content: center; z-index: 10; }
-    .modal.show { display: flex; }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.3); display: none; align-items: center; justify-content: center; z-index: 10; }
+        .modal.show { display: flex; }
 
-    .modal-content {
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      width: 250px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      text-align: center;
-    }
+        .modal-content {
+          background: white;
+          padding: 2rem;
+          border-radius: 12px;
+          width: 250px;
+          box-shadow: 0 0 15px rgba(0,0,0,0.2);
+          text-align: center;
+        }
 
-    .loader {
-      width: 40px;
-      height: 40px;
-      margin: 0 auto 1rem;
-      border: 4px solid #eee;
-      border-top: 4px solid #4f46e5;
-      border-radius: 50%;
-      position: relative;
-      animation: spin 0.6s linear infinite, stop-loader 2s forwards;
-    }
+        .loader {
+          width: 40px;
+          height: 40px;
+          margin: 0 auto 1rem;
+          border: 4px solid #eee;
+          border-top: 4px solid #4f46e5;
+          border-radius: 50%;
+          position: relative;
+          animation: spin 0.6s linear infinite, stop-loader 2s forwards;
+        }
 
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    @keyframes stop-loader { 0%,70% { border-top-color: #4f46e5; } 100% { border-color: transparent; } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes stop-loader { 0%,70% { border-top-color: #4f46e5; } 100% { border-color: transparent; } }
 
-    .checkmark {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      font-size: 30px;
-      color: #4caf50;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      animation: fade-in 0.3s ease forwards;
-      animation-delay: 1.4s;
-    }
+        .checkmark {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          font-size: 30px;
+          color: #4caf50;
+          display: none;
+          align-items: center;
+          justify-content: center;
+          animation: fade-in 0.3s ease forwards;
+          animation-delay: 1.4s;
+        }
 
-    @keyframes fade-in { to { display: flex; opacity: 1; } }
-    .message { font-size: 14px; color: #333; }
-  </style>
+        @keyframes fade-in { to { display: flex; opacity: 1; } }
+        .message { font-size: 14px; color: #333; }
+    </style>
 </head>
 <body>
 
-  <div class="container">
+<div class="container">
     <div class="login-box">
-      <h2>ورود به سامانه</h2>
+        <h2>ورود به سامانه</h2>
         <form id="login-form" method="post">
             {% csrf_token %}
-        <label>کد ملی</label>
-        <input name="national_id" inputmode="numeric" placeholder="کد ملی" required />
-        <p>ثبت نام نکرده‌اید؟ <a href="/accounts/signup.html">ثبت نام</a></p>
-        <p>کارمند هستید؟ <a href="/accounts/staff_dashboard.html">وارد شوید.</a></p>
-        <button type="submit">ارسال کد ورود</button>
-      </form>
+            <label>کد ملی</label>
+            <input name="national_id" inputmode="numeric" placeholder="کد ملی" required/>
+            <p>ثبت نام نکرده‌اید؟ <a href="{% url 'signup' %}">ثبت نام</a></p>
+            <p>کارمند هستید؟ <a href="{% url 'staff_dashboard' %}">وارد شوید.</a></p>
+            <button type="submit">ارسال کد ورود</button>
+        </form>
     </div>
-  </div>
+</div>
 
 <div class="modal" id="modal">
-  <div class="modal-content">
-    <div class="loader">
-      <div class="checkmark">✔</div>
+    <div class="modal-content">
+        <div class="loader">
+            <div class="checkmark">✔</div>
+        </div>
+        <p class="message">
+            کد ورود ارسال شد:
+            <span id="code-span" style="font-weight:bold; font-size:16px; color:#4f46e5;"></span>
+        </p>
     </div>
-    <p class="message">
-      کد ورود ارسال شد:
-      <span id="code-span" style="font-weight:bold; font-size:16px; color:#4f46e5;"></span>
-    </p>
-  </div>
 </div>
 
 <script>
-document.getElementById("login-form").addEventListener("submit", function(e) {
-    e.preventDefault(); // جلوگیری از ارسال فرم سنتی
+    document.getElementById("login-form").addEventListener("submit", function(e) {
+        e.preventDefault(); // جلوگیری از ارسال فرم سنتی
 
-    // تولید کد 5 رقمی
-    const code = Math.floor(10000 + Math.random() * 90000);
+        const nationalId = this.national_id.value;
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-    // نمایش کد در دیالوگ
-    document.getElementById("code-span").textContent = code;
-    document.getElementById("modal").classList.add("show");
-
-    // ارسال کد و کد ملی به سرور بعد از 4 ثانیه
-    setTimeout(() => {
-        const formData = new FormData();
-        formData.append("national_id", this.national_id.value);
-        formData.append("verify_code", code); // ارسال کد تولید شده
-
-        fetch("{% url 'login' %}", {
+        // بررسی کدملی در سرور قبل از نمایش کد
+        fetch("{% url 'check_national_id' %}", {
             method: "POST",
-            body: formData,
-            headers: { "X-CSRFToken": "{{ csrf_token }}" }
-        }).then(res => {
-            window.location.href = "{% url 'verify' %}";
-        });
-    }, 4000);
-});
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken
+            },
+            body: JSON.stringify({ national_id: nationalId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.exists){
+                // کد 5 رقمی تولید شود
+                const code = Math.floor(10000 + Math.random() * 90000);
+                document.getElementById("code-span").textContent = code;
+                document.getElementById("modal").classList.add("show");
+
+                // ارسال کد و کد ملی به login بعد از 4 ثانیه
+                setTimeout(() => {
+                    const formData = new FormData();
+                    formData.append("national_id", nationalId);
+                    formData.append("verify_code", code);
+
+                    fetch("{% url 'login' %}", {
+                        method: "POST",
+                        body: formData,
+                        headers: { "X-CSRFToken": csrfToken }
+                    }).then(() => {
+                        window.location.href = "{% url 'verify' %}";
+                    });
+                }, 4000);
+            } else {
+<!--                // اگر کاربر ثبت نام نکرده، به صفحه ثبت نام برود-->
+                window.location.href = "{% url 'signup' %}?message=need_signup";
+            }
+        })
+        .catch(err => console.error(err));
+    });
 </script>
 
 </body>
