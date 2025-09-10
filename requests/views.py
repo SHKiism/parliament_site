@@ -8,7 +8,7 @@ from .models import Request
 
 def request_detail(request, req_id):
     req = get_object_or_404(Request, id=req_id)
-    return render(request, "requests/detail.html", {"request_obj": req})
+    return render(request, "requests/review_request.html", {"request_obj": req})
 
 
 def submit_request(request):
@@ -21,7 +21,6 @@ def submit_request(request):
         if not national_id:
             messages.error(request, "لطفاً ابتدا وارد شوید.")
             return redirect("login")
-
 
         citizen, created = Citizen.objects.get_or_create(national_id=national_id)
 
@@ -40,3 +39,21 @@ def submit_request(request):
 
 def edit_profile(request):
     return render(request, "requests/edit_profile.html")
+
+
+def review_request_staff(request, pk):
+    req = get_object_or_404(Request, pk=pk)
+
+    if request.method == "POST":
+        new_status = request.POST.get("status")
+        response_text = request.POST.get("response")
+
+        if new_status:
+            req.status = new_status
+        if response_text:
+            req.response = response_text
+
+        req.save()
+        return redirect("staff_dashboard")  # بعد از ذخیره برگرد به داشبورد
+
+    return render(request, "requests/review_request_staff.html", {"req": req})

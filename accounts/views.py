@@ -101,4 +101,34 @@ def user_dashboard(request):
 
 
 def staff_dashboard(request):
-    return render(request, "accounts/staff_dashboard.html")
+    print(">>> staff_dashboard called")
+    all_requests = Request.objects.all().order_by("-created_at")
+
+    stats = {
+        'total': all_requests.count(),
+        'pending': all_requests.filter(status='pending').count(),
+        'in_progress': all_requests.filter(status='in_progress').count(),
+        'done': all_requests.filter(status='done').count(),
+        'rejected': all_requests.filter(status='rejected').count(),
+    }
+
+    # اعمال فیلتر
+    search_query = request.GET.get('q', '')
+    status_filter = request.GET.get('status', 'all')
+
+    filtered_requests = all_requests
+    if search_query:
+        filtered_requests = filtered_requests.filter(title__icontains=search_query)
+    if status_filter != 'all':
+        filtered_requests = filtered_requests.filter(status=status_filter)
+
+    context = {
+        'stats': stats,
+        'requests': filtered_requests,
+        'search_query': search_query,
+        'status_filter': status_filter,
+    }
+    print(filtered_requests)
+    print(stats)
+
+    return render(request, 'accounts/staff_dashboard.html', context)
