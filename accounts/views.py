@@ -1,17 +1,20 @@
+from django.urls import reverse
+
 from requests.models import Request
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from .models import Citizen
+from .models import Citizen, Employee
 import json
 
 
 def login_view(request):
     if request.method == "POST":
         national_id = request.POST.get("national_id")
-        code = request.POST.get("verify_code")  # کد تولید شده از JS
+        code = request.POST.get("verify_code")
         request.session["verify_code"] = code
         request.session["national_id"] = national_id
         request.session["is_signup"] = False
+        request.session["user_type"] = "citizen"
         print("entered_otp:", code)
         return render(request, "accounts/verify.html", {"code": code})
 
@@ -29,6 +32,7 @@ def signup(request):
         request.session["verify_code"] = code
         request.session["national_id"] = national_id
         request.session["is_signup"] = True
+        request.session["user_type"] = "citizen"
         request.session["first_name"] = first_name
         request.session["last_name"] = last_name
         request.session["phone"] = phone
@@ -48,6 +52,31 @@ def check_national_id(request):
     return JsonResponse({"exists": False})
 
 
+def staff_login(request):
+    request.session["user_type"] = "employee"
+    if request.method == "POST":
+        national_id = request.POST.get("national_id")
+        code = request.POST.get("verify_code")
+        request.session["verify_code"] = code
+        request.session["national_id"] = national_id
+        request.session["is_signup"] = False
+
+        return render(request, "accounts/verify.html", {"code": code})
+
+    return render(request, "accounts/staff_login.html")
+
+
+def staff_login_check(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        national_id = data.get("national_id")
+        exists = Employee.objects.filter(national_id=national_id).exists()
+
+        return JsonResponse({"exists": exists})
+
+    return JsonResponse({"exists": False})
+
+
 def verify(request):
     error = None
     if request.method == "POST":
@@ -55,14 +84,12 @@ def verify(request):
         saved_otp = request.session.get("verify_code")
         national_id = request.session.get("national_id")
         is_signup = request.session.get("is_signup", False)
+        user_type = request.session["user_type"]
 
-        print(">>>>>>>>>>>>>>>>> entered_otp:", entered_otp)
-        print("saved_otp:", saved_otp)
-        print("national_id:", national_id)
-        if entered_otp == saved_otp:
+        if entered_otp == saved_otp and user_type == "citizen":
             citizen = Citizen.objects.filter(national_id=national_id).first()
 
-            if is_signup and not citizen:
+            if is_signup:
                 # ساخت کاربر جدید
                 phone = request.session.get("phone")
                 first_name = request.session.get("first_name")
@@ -76,13 +103,13 @@ def verify(request):
             elif not citizen:
                 error = "کاربری با این کد ملی پیدا نشد."
                 return render(request, "accounts/verify.html", {"error": error})
-
             # ورود موفق → ذخیره وضعیت در session
             request.session["is_logged_in"] = True
             request.session["national_id"] = citizen.national_id
-            print(">>> OTP صحیح بود، رفتیم به داشبورد")
-
             return redirect("user_dashboard")
+        elif entered_otp == saved_otp and user_type == "employee":
+            print(request)
+            return redirect(reverse('staff_dashboard'))
         else:
             error = "کد وارد شده صحیح نیست. لطفاً دوباره تلاش کنید."
 
@@ -102,6 +129,7 @@ def user_dashboard(request):
 
 def staff_dashboard(request):
     print(">>> staff_dashboard called")
+    print(request)
     all_requests = Request.objects.all().order_by("-created_at")
 
     stats = {
