@@ -111,12 +111,11 @@
 
 <script>
     document.getElementById("login-form").addEventListener("submit", function(e) {
-        e.preventDefault(); // جلوگیری از ارسال فرم سنتی
+        e.preventDefault();
 
         const nationalId = this.national_id.value;
         const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-        // بررسی کدملی در سرور قبل از نمایش کد
         fetch("{% url 'check_national_id' %}", {
             method: "POST",
             headers: {
@@ -128,12 +127,10 @@
         .then(res => res.json())
         .then(data => {
             if(data.exists){
-                // کد 5 رقمی تولید شود
                 const code = Math.floor(10000 + Math.random() * 90000);
                 document.getElementById("code-span").textContent = code;
                 document.getElementById("modal").classList.add("show");
 
-                // ارسال کد و کد ملی به login بعد از 4 ثانیه
                 setTimeout(() => {
                     const formData = new FormData();
                     formData.append("national_id", nationalId);
@@ -146,9 +143,8 @@
                     }).then(() => {
                         window.location.href = "{% url 'verify' %}";
                     });
-                }, 4000);
+                }, 3000);
             } else {
-<!--                // اگر کاربر ثبت نام نکرده، به صفحه ثبت نام برود-->
                 window.location.href = "{% url 'signup' %}?message=need_signup";
             }
         })

@@ -1,7 +1,7 @@
 from django.urls import reverse
 
 from requests.models import Request
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from .models import Citizen, Employee
 import json
@@ -160,3 +160,17 @@ def staff_dashboard(request):
     print(stats)
 
     return render(request, 'accounts/staff_dashboard.html', context)
+
+
+def edit_profile(request):
+    national_id = request.session.get("national_id")
+    citizen = Citizen.objects.get(national_id=national_id)
+
+    if request.method == "POST":
+        citizen.first_name = request.POST.get("first_name")
+        citizen.last_name = request.POST.get("last_name")
+        citizen.phone = request.POST.get("phone")
+        citizen.save()
+        return redirect("user_dashboard")
+
+    return render(request, "accounts/edit_profile.html", {"citizen": citizen})

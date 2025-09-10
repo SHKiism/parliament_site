@@ -37,10 +37,6 @@ def submit_request(request):
     return render(request, "requests/submit_request.html")
 
 
-def edit_profile(request):
-    return render(request, "requests/edit_profile.html")
-
-
 def review_request_staff(request, pk):
     req = get_object_or_404(Request, pk=pk)
 

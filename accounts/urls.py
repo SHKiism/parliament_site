@@ -10,4 +10,5 @@ urlpatterns = [
     path('staff_login_check/', views.staff_login_check, name='staff_login_check'),
     path("staff_login/", views.staff_login, name="staff_login"),
     path('check_national_id/', views.check_national_id, name='check_national_id'),
+    path('edit_profile/', views.edit_profile, name='edit_profile'),
 ]
